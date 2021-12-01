@@ -2,67 +2,98 @@ const express = require('express');
 const fs = require('fs/promises');
 const bodyParser = require('body-parser');
 const {MongoClient} = require ('mongodb');
+const { send } = require('process');
+require('dotenv').config();
 
-const url = "mongodb+srv://teamJasmien:teamJasmien@cluster0.dfugl.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";   //FOUT
-const client = new MongoClient(url);
+console.log(process.env.TEST);
+
+const client = new MongoClient(process.env.FINAL_URL);
 const dbName = "session7";
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT;
+const db = client.db("session7")
 
 
 app.use(bodyParser.json());
 app.get('/', (req, res) => {
-    res.send(' get local call');
+    res.send('Getting local call');
 })
 
-app.get('/challenges', async (req, res) => {
+app.get('/allChallenges', async (req, res) => {
     try {
         await client.connect();
-        const db = client.db("session7")
+        
         //retrieve the boardgame collection data
-        const colli = db.collection('boardgames');
-        let testData = {
-            name: "challenge1",
-            course: "web2"
-        }
+        const colli = db.collection('challenges');
+        const findChallenge = await colli.find({}).toArray();
 
         //Send back the data with the response
-        res.status(200).send(testData);
+        res.status(200).send(findChallenge);
        } catch (err) {
-        console.log(err.stack);
+        console.log(err);
+        res.status(500).send({
+            err: 'Something went wrong. Try again',
+            value: err
+        })
     }
 
     finally {
        await client.close();
    }
 
-    // try{
-    //     //connect to the db
-    //     await client.connect();
+})
+app.post('/saveChallenge', async (req, res) => {
 
-    //     //retrieve the boardgame collection data
-    //     const db = dbName;
-    //     const colli = client.db('session7').collection('challenges');
-    //     const bgs = await colli.find({}).toArray();
+    if (!req.body.name || !req.body.points || !req.body.course){
+        res.status(400).send('Something went wrong. Please enter name, points and course');
+        return;
+    }
 
-    //     //Send back the data with the response
-    //     let testdata = {
-    //         name: 'Challenge',
-    //         course: 'WebII'
-    //     }
-    //     res.send(testdata);
-    // }catch(error){
-    //     console.log(error)
-    //     res.status(500).send({
-    //         error: 'Something went wrong',
-    //         value: error
-    //     });
-    // }finally {
-    //     await client.close();
-    // }
+    try {
+        await client.connect();
+
+        const collie2 = db.collection('challenges');
+        const dubbleChallenge = await collie2.findOne({name: req.body.name});
+
+        if(dubbleChallenge){
+            res.status(400).send('Bad request: boardgame already exists with name ' + req.body.name);
+            return;
+        }
+        let newChallenge = {
+            name: req.body.name,
+            points: req.body.points,
+            course: req.body.course,
+            session: req.body.session
+        }
+        let insertResultChallenge = await colli.insertOne(newChallenge);
+
+        res.status(201).send(`The challenge is succesfully saved. Here is some info: ${req.body}`)
+        return;
+    }catch (err) {
+        console.log(err);
+        res.status(500).send({
+            err: 'Something went wrong. Try again',
+            value: err
+        })
+    }
+    finally{
+        await client.close();
+    }
 })
 
+// app.put('/allChallenges/:id', (req, res) => {
+//     const { id } = req.params;
+//     // code to update an article...
+//     res.json(req.body);
+//   });
+  
+//   app.delete('/allChallenges/:id', (req, res) => {
+//     const { id } = req.params;
+//     // code to delete an article...
+//     res.json({ deleted: id });
+//   });
+
 app.listen(port, () => {
-    console.log(`api is listening at http://localhost:${port}`)
+    console.log(`server started at http://localhost:${port}`)
 })

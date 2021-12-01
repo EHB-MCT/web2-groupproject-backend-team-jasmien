@@ -5,8 +5,6 @@ const {MongoClient} = require ('mongodb');
 const { send } = require('process');
 require('dotenv').config();
 
-console.log(process.env.TEST);
-
 const client = new MongoClient(process.env.FINAL_URL);
 const dbName = "session7";
 

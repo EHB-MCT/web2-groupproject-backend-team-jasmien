@@ -80,17 +80,13 @@ app.post('/saveChallenge', async (req, res) => {
     }
 })
 
-// app.put('/allChallenges/:id', (req, res) => {
-//     const { id } = req.params;
-//     // code to update an article...
-//     res.json(req.body);
-//   });
+app.put('/allChallenges/:id', (req, res) => {
+    res.send('Update oki');
+});
   
-//   app.delete('/allChallenges/:id', (req, res) => {
-//     const { id } = req.params;
-//     // code to delete an article...
-//     res.json({ deleted: id });
-//   });
+app.delete('/allChallenges/:id', (req, res) => {
+    res.send('Delete oki');
+});
 
 app.listen(port, () => {
     console.log(`server started at http://localhost:${port}`)

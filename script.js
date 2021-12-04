@@ -9,14 +9,13 @@ const client = new MongoClient(process.env.FINAL_URL);
 const dbName = "session7";
 
 const app = express();
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const db = client.db(dbName)
 
 
 app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Getting local call');
-    res.status(300).redirect(`https://github.com/EHB-MCT/web-2-groupproject-frontend-team-jasmien/blob/main/index.html`)
 })
 
 app.get('/allChallenges', async (req, res) => {

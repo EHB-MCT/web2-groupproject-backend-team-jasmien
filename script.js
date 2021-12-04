@@ -16,7 +16,7 @@ const db = client.db(dbName)
 app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Getting local call');
-    res.status(300).redirect(`https://github.com/EHB-MCT/web-2-groupproject-frontend-team-jasmien.git`)
+    res.status(300).redirect(`https://github.com/EHB-MCT/web-2-groupproject-frontend-team-jasmien/blob/main/index.html`)
 })
 
 app.get('/allChallenges', async (req, res) => {

@@ -8,7 +8,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 
-const client = new MongoClient(process.env.FINAL_URL);
+const client = new MongoClient(process.env.FINAL_URL, {useNewUrlParser: true});
 const dbName = "session7";
 
 

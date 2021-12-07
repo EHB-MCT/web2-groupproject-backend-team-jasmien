@@ -17,7 +17,9 @@ app.use(bodyParser.json());
 // app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Getting local call');
+    res.send('Welcome to api testing');
+    res.send('Get all challenges: /allChallenges');
+    res.send('Get all challenges: /saveChallenge');
 })
 
 app.get('/allChallenges', async (req, res) => {
@@ -45,22 +47,12 @@ app.get('/allChallenges', async (req, res) => {
 app.post('/saveChallenge', async (req, res) => {
     console.log(req.body)
 
-    // if (!req.body.name || !req.body.points || !req.body.course ||!req.body.session){
-    //     res.status(400).send('Something went wrong. Please enter name, points and course');
-    //     return;
-    // }
 
     try {
         await client.connect();
 
         const db = client.db(dbName)
         const colli = db.collection('challenges');
-        // const dubbleChallenge = await colli.findOne({name: req.body.name})
-
-        // if(dubbleChallenge){
-        //     res.status(400).send('Bad request: boardgame already exists with name ' + req.body.name);
-        //     return;
-        // }
 
         let newChallenge = {
             name: req.body.name,

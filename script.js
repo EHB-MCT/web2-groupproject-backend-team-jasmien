@@ -62,7 +62,7 @@ app.post('/saveChallenge', async (req, res) => {
 
         let insertResultChallenge = await colli.insertOne(newChallenge);
 
-        res.status(201).send(`The challenge is succesfully saved. Here is some info: ${req.body.name}`)
+        res.status(201).send(newChallenge)
         return;
 
     }catch (err) {

@@ -54,6 +54,7 @@ app.post('/saveChallenge', async (req, res) => {
         const colli = db.collection('challenges');
 
         let newChallenge = {
+            _id: req.body.id,
             name: req.body.name,
             points: req.body.points,
             course: req.body.course,

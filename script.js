@@ -3,6 +3,7 @@ const fs = require('fs/promises');
 const bodyParser = require('body-parser');
 const {MongoClient} = require ('mongodb');
 require('dotenv').config();
+const cors = require('cors')
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -11,8 +12,10 @@ const client = new MongoClient(process.env.FINAL_URL);
 const dbName = "session7";
 
 
-
+app.use(bodyParser.urlencoded({extended = true}));
 app.use(bodyParser.json());
+app.use(cors());
+
 app.get('/', (req, res) => {
     res.send('Getting local call');
 })
@@ -70,7 +73,7 @@ app.post('/saveChallenge', async (req, res) => {
 
         res.status(201).send(`The challenge is succesfully saved. Here is some info: ${req.body.name}`)
         return;
-        
+
     }catch (err) {
         console.log('post',err);
         res.status(500).send({

@@ -62,7 +62,7 @@ app.post('/saveChallenge', async (req, res) => {
 
         let insertResultChallenge = await colli.insertOne(newChallenge);
 
-        res.status(201).send(newChallenge)
+        res.status(201).json(newChallenge)
         return;
 
     }catch (err) {

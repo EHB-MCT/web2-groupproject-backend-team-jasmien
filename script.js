@@ -10,6 +10,7 @@ const port = process.env.PORT || 3000;
 
 const client = new MongoClient(process.env.FINAL_URL);
 const dbName = "session7";
+app.use(cors());
 
 
 // app.use(bodyParser.urlencoded({extended = true}));

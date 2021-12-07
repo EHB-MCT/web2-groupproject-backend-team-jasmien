@@ -45,10 +45,10 @@ app.get('/allChallenges', async (req, res) => {
 app.post('/saveChallenge', async (req, res) => {
     console.log(req.body)
 
-    if (!req.body.name || !req.body.points || !req.body.course ||!req.body.session){
-        res.status(400).send('Something went wrong. Please enter name, points and course');
-        return;
-    }
+    // if (!req.body.name || !req.body.points || !req.body.course ||!req.body.session){
+    //     res.status(400).send('Something went wrong. Please enter name, points and course');
+    //     return;
+    // }
 
     try {
         await client.connect();

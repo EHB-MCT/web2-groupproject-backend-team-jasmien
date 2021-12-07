@@ -55,12 +55,12 @@ app.post('/saveChallenge', async (req, res) => {
 
         const db = client.db(dbName)
         const colli = db.collection('challenges');
-        const dubbleChallenge = await colli.findOne({name: req.body.name})
+        // const dubbleChallenge = await colli.findOne({name: req.body.name})
 
-        if(dubbleChallenge){
-            res.status(400).send('Bad request: boardgame already exists with name ' + req.body.name);
-            return;
-        }
+        // if(dubbleChallenge){
+        //     res.status(400).send('Bad request: boardgame already exists with name ' + req.body.name);
+        //     return;
+        // }
 
         let newChallenge = {
             name: req.body.name,

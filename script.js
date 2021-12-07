@@ -17,10 +17,8 @@ app.use(bodyParser.json());
 // app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Welcome to api testing');
-    res.send('Get all challenges: /allChallenges');
-    res.send('Get all challenges: /saveChallenge');
-    res.send('unfortunately the put and the delete does not work');
+    res.send('Get all challenges: /allChallenges' + 'Post challenge: /saveChallenge' + 'unfortunately the put and the delete does not work');
+
 })
 
 app.get('/allChallenges', async (req, res) => {

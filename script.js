@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 // app.use(cors());
 
 app.get('/', (req, res) => {
-    res.send('Get all challenges: /allChallenges' + 'Post challenge: /saveChallenge' + 'unfortunately the put and the delete does not work');
+    res.send('Get all challenges: /allChallenges ' + 'Post challenge: /saveChallenge ' + 'unfortunately the put and the delete does not work');
 
 })
 
